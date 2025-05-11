@@ -39,6 +39,8 @@ export class GameComponent {
       if (card) {
         this.currentCard = card;
         this.pickCardAnimation = true;
+        this.game.currentPlayer++;
+        this.game.currentPlayer = this.game.currentPlayer % this.game.players.length;
         setTimeout(() => {
           this.game.playedCards.push(card);
           this.pickCardAnimation = false;
