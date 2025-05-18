@@ -45,7 +45,7 @@ export class GameComponent {
 
   newGame() {
     this.game = new Game();
-    addDoc(this.getGamesRef(), { hello: 'world' });
+    addDoc(this.getGamesRef(), this.game.toJson());
   }
 
   takeCard() {
