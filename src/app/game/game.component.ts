@@ -19,9 +19,6 @@ import { ActivatedRoute } from '@angular/router';
 })
 
 export class GameComponent {
-
-  pickCardAnimation = false;
-  currentCard: string | undefined = '';
   game: Game = new Game();
   gameId!: string;
 
@@ -38,6 +35,8 @@ export class GameComponent {
         this.game.playedCards = game.playedCards;
         this.game.players = game.players;
         this.game.stack = game.stack;
+        this.game.pickCardAnimation = game.pickCardAnimation;
+        this.game.currentCard = game.currentCard;
       });
     })
   }
@@ -47,18 +46,18 @@ export class GameComponent {
   }
 
   takeCard() {
-    if (!this.pickCardAnimation) {
+    if (!this.game.pickCardAnimation) {
       const card = this.game.stack.pop();
       if (card) {
-        this.currentCard = card;
-        this.pickCardAnimation = true;
-        this.saveGame();
+        this.game.currentCard = card;
+        this.game.pickCardAnimation = true;
         this.game.currentPlayer++;
         this.game.currentPlayer = this.game.currentPlayer % this.game.players.length;
+        this.saveGame();
         setTimeout(() => {
           this.game.playedCards.push(card);
+          this.game.pickCardAnimation = false;
           this.saveGame();
-          this.pickCardAnimation = false;
         }, 1000);
       }
     }
