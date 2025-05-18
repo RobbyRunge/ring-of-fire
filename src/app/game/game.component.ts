@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Game } from '../../models/game';
 import { PlayerComponent } from "../player/player.component";
 import { MatIconModule } from '@angular/material/icon';
@@ -7,8 +7,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogAddPlayerComponent } from '../dialog-add-player/dialog-add-player.component';
 import { GameInfoComponent } from "../game-info/game-info.component";
-import { Injectable, inject } from '@angular/core';
-import { collectionData, collection, Firestore } from '@angular/fire/firestore';
+import { collectionData, collection, Firestore, addDoc } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-game',
@@ -46,6 +45,7 @@ export class GameComponent {
 
   newGame() {
     this.game = new Game();
+    addDoc(this.getGamesRef(), { hello: 'world' });
   }
 
   takeCard() {
