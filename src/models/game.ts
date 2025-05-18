@@ -16,10 +16,10 @@ export class Game {
 
   public toJson() {
     return {
-      players: this.players,
-      stack: this.stack,
-      playedCard: this.playedCards,
-      currentPlayer: this.currentPlayer
+      players: this.players || [],
+      stack: this.stack || [],
+      playedCards: this.playedCards || [],
+      currentPlayer: this.currentPlayer || 0
     };
   }
 }

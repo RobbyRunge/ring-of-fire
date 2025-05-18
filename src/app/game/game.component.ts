@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { Game } from '../../models/game';
 import { PlayerComponent } from "../player/player.component";
 import { MatIconModule } from '@angular/material/icon';
@@ -23,6 +23,7 @@ export class GameComponent {
   pickCardAnimation = false;
   currentCard: string | undefined = '';
   game: Game = new Game();
+  gameId!: string;
 
   constructor(private route: ActivatedRoute, public dialog: MatDialog, private services: GameService) { }
 
@@ -30,16 +31,13 @@ export class GameComponent {
     this.newGame();
     this.route.params.subscribe((params) => {
       console.log(params['id']);
-
-      this
-        .services
-        .getGameById(params['id'])
-        .subscribe((game:any) => {
-          console.log('Game updated', game);
-          this.game.currentPlayer = game.currentPlayer;
-          this.game.playedCards = game.playedCards;
-          this.game.players = game.players;
-          this.game.stack = game.stack;
+      this.gameId = params['id'];
+      this.services.getGameById(this.gameId).subscribe((game: any) => {
+        console.log('Game updated', game);
+        this.game.currentPlayer = game.currentPlayer;
+        this.game.playedCards = game.playedCards;
+        this.game.players = game.players;
+        this.game.stack = game.stack;
       });
     })
   }
@@ -54,10 +52,12 @@ export class GameComponent {
       if (card) {
         this.currentCard = card;
         this.pickCardAnimation = true;
+        this.saveGame();
         this.game.currentPlayer++;
         this.game.currentPlayer = this.game.currentPlayer % this.game.players.length;
         setTimeout(() => {
           this.game.playedCards.push(card);
+          this.saveGame();
           this.pickCardAnimation = false;
         }, 1000);
       }
@@ -70,7 +70,12 @@ export class GameComponent {
     dialogRef.afterClosed().subscribe(name => {
       if (name && name.length > 0) {
         this.game.players.push(name);
+        this.saveGame();
       }
     });
+  }
+
+  saveGame() {
+    this.services.updateGame(this.gameId, this.game.toJson());
   }
 }
