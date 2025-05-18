@@ -46,7 +46,6 @@ export class GameComponent {
 
   newGame() {
     this.game = new Game();
-    // this.services.createNewGame(this.game);
   }
 
   takeCard() {
