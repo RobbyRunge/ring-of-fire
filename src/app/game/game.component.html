@@ -3,9 +3,9 @@
   [ngStyle]="{'top.px': 90 + $index * 90}"></app-player>
 }
 
-<div class="scroll-container hide-desktop">
+<div class="scroll-container">
   @for (player of game.players; track $index) {
-  <app-player-mobile [playerActive]="$index == game.currentPlayer" [name]="player"></app-player-mobile>
+  <app-player-mobile [playerActive]="$index == game.currentPlayer" [name]="player" class="hide-desktop"></app-player-mobile>
   }
 </div>
 
