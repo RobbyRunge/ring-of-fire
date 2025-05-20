@@ -102,3 +102,13 @@ app-player, app-player-mobile {
     filter: brightness(1.15);
   }
 }
+
+.game-over {
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+
+  img {
+    width: 300px;
+  }
+}

@@ -24,6 +24,7 @@ export class GameComponent {
   game: Game = new Game();
   gameId!: string;
   playerId!: number;
+  gameOver = false;
 
   constructor(private route: ActivatedRoute, public dialog: MatDialog, private services: GameService) { }
 
@@ -50,7 +51,9 @@ export class GameComponent {
   }
 
   takeCard() {
-    if (!this.game.pickCardAnimation) {
+    if (this.game.stack.length === 0) {
+      this.gameOver = true;
+    } else if (!this.game.pickCardAnimation) {
       const card = this.game.stack.pop();
       if (card) {
         this.game.currentCard = card;

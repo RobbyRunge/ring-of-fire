@@ -9,8 +9,11 @@
   }
 </div>
 
+<div *ngIf="gameOver" class="game-over">
+  <img src="./assets/imgs/game_over.svg" alt="">
+</div>
 
-<div class="field">
+<div *ngIf="!gameOver" class="field">
   <div class="card-stack">
     <!-- Card stack -->
     @for (card of [0,1,2,3]; track $index) {
@@ -29,8 +32,8 @@
   </div>
 </div>
 
-<app-game-info [card]="game.currentCard || ''" class="pin-bottom"></app-game-info>
+<app-game-info *ngIf="!gameOver" [card]="game.currentCard || ''" class="pin-bottom"></app-game-info>
 
-<button mat-fab color="primary" class="btn-add" (click)="openDialog()">
+<button *ngIf="!gameOver" mat-fab color="primary" class="btn-add" (click)="openDialog()">
   <mat-icon>add</mat-icon>
 </button>
