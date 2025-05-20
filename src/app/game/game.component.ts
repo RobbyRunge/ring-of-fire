@@ -10,6 +10,7 @@ import { GameInfoComponent } from "../game-info/game-info.component";
 import { GameService } from '../services/services.component';
 import { ActivatedRoute } from '@angular/router';
 import { PlayerMobileComponent } from '../player-mobile/player-mobile.component';
+import { EditPlayerComponent } from '../edit-player/edit-player.component';
 
 @Component({
   selector: 'app-game',
@@ -67,7 +68,12 @@ export class GameComponent {
 
   editPlayer(playerId: number) {
     console.log('Edit player', playerId);
-    
+
+    const dialogRef = this.dialog.open(EditPlayerComponent);
+    dialogRef.afterClosed().subscribe(change => {
+      console.log('Received change', change);
+      
+    });
   }
 
   openDialog(): void {
