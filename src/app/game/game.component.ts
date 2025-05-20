@@ -22,6 +22,7 @@ import { PlayerMobileComponent } from '../player-mobile/player-mobile.component'
 export class GameComponent {
   game: Game = new Game();
   gameId!: string;
+  playerId!: number;
 
   constructor(private route: ActivatedRoute, public dialog: MatDialog, private services: GameService) { }
 
@@ -62,6 +63,11 @@ export class GameComponent {
         }, 1000);
       }
     }
+  }
+
+  editPlayer(playerId: number) {
+    console.log('Edit player', playerId);
+    
   }
 
   openDialog(): void {
