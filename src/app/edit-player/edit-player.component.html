@@ -1,5 +1,5 @@
 <div class="profile-picture-position">
   @for (picture of allProfilePicture; track $index) {
-  <img class="profile-picture" src="assets/imgs/profile/{{ picture }}" alt="">
+  <img [mat-dialog-close]="picture" class="profile-picture" src="assets/imgs/profile/{{ picture }}" alt="">
   }
 </div>

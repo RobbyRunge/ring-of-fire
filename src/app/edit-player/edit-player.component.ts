@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
+import { MatDialogModule} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-edit-player',
   standalone: true,
-  imports: [],
+  imports: [MatDialogModule],
   templateUrl: './edit-player.component.html',
   styleUrl: './edit-player.component.scss'
 })

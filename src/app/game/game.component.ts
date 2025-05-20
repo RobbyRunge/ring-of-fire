@@ -37,6 +37,7 @@ export class GameComponent {
         this.game.currentPlayer = game.currentPlayer;
         this.game.playedCards = game.playedCards;
         this.game.players = game.players;
+        this.game.playerImages = game.playerImages;
         this.game.stack = game.stack;
         this.game.pickCardAnimation = game.pickCardAnimation;
         this.game.currentCard = game.currentCard;
@@ -72,7 +73,8 @@ export class GameComponent {
     const dialogRef = this.dialog.open(EditPlayerComponent);
     dialogRef.afterClosed().subscribe(change => {
       console.log('Received change', change);
-      
+      this.game.playerImages[playerId] = change;
+      this.saveGame();
     });
   }
 
@@ -82,6 +84,7 @@ export class GameComponent {
     dialogRef.afterClosed().subscribe(name => {
       if (name && name.length > 0) {
         this.game.players.push(name);
+        this.game.playerImages.push('1.webp');
         this.saveGame();
       }
     });
