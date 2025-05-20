@@ -72,9 +72,14 @@ export class GameComponent {
 
     const dialogRef = this.dialog.open(EditPlayerComponent);
     dialogRef.afterClosed().subscribe(change => {
-      console.log('Received change', change);
-      this.game.playerImages[playerId] = change;
-      this.saveGame();
+      if (change) {
+        if (change == 'DELETE') {
+          this.game.players.splice(playerId)
+        } else {
+          this.game.playerImages[playerId] = change;
+        }
+        this.saveGame();
+      }
     });
   }
 
