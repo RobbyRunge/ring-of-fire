@@ -10,6 +10,7 @@ import { GameInfoComponent } from "../game-info/game-info.component";
 import { GameService } from '../services/services.component';
 import { ActivatedRoute } from '@angular/router';
 import { PlayerMobileComponent } from '../player-mobile/player-mobile.component';
+import { EditPlayerComponent } from '../edit-player/edit-player.component';
 
 @Component({
   selector: 'app-game',
@@ -22,6 +23,8 @@ import { PlayerMobileComponent } from '../player-mobile/player-mobile.component'
 export class GameComponent {
   game: Game = new Game();
   gameId!: string;
+  playerId!: number;
+  gameOver = false;
 
   constructor(private route: ActivatedRoute, public dialog: MatDialog, private services: GameService) { }
 
@@ -35,6 +38,7 @@ export class GameComponent {
         this.game.currentPlayer = game.currentPlayer;
         this.game.playedCards = game.playedCards;
         this.game.players = game.players;
+        this.game.playerImages = game.playerImages;
         this.game.stack = game.stack;
         this.game.pickCardAnimation = game.pickCardAnimation;
         this.game.currentCard = game.currentCard;
@@ -47,7 +51,9 @@ export class GameComponent {
   }
 
   takeCard() {
-    if (!this.game.pickCardAnimation) {
+    if (this.game.stack.length === 0) {
+      this.gameOver = true;
+    } else if (!this.game.pickCardAnimation) {
       const card = this.game.stack.pop();
       if (card) {
         this.game.currentCard = card;
@@ -64,12 +70,29 @@ export class GameComponent {
     }
   }
 
+  editPlayer(playerId: number) {
+    console.log('Edit player', playerId);
+
+    const dialogRef = this.dialog.open(EditPlayerComponent);
+    dialogRef.afterClosed().subscribe(change => {
+      if (change) {
+        if (change == 'DELETE') {
+          this.game.players.splice(playerId)
+        } else {
+          this.game.playerImages[playerId] = change;
+        }
+        this.saveGame();
+      }
+    });
+  }
+
   openDialog(): void {
     const dialogRef = this.dialog.open(DialogAddPlayerComponent);
 
     dialogRef.afterClosed().subscribe(name => {
       if (name && name.length > 0) {
         this.game.players.push(name);
+        this.game.playerImages.push('1.webp');
         this.saveGame();
       }
     });

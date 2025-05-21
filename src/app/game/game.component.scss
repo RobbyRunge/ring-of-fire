@@ -94,3 +94,21 @@
     margin-left: 8px;
   }
 }
+
+app-player, app-player-mobile {
+  cursor: pointer;
+
+  &:hover {
+    filter: brightness(1.15);
+  }
+}
+
+.game-over {
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+
+  img {
+    width: 300px;
+  }
+}
